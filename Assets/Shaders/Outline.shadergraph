@@ -1569,7 +1569,7 @@
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": 0.10000000149011612,
-        "y": 10.0
+        "y": 20.0
     },
     "m_SliderType": 0,
     "m_SliderPower": 3.0,
@@ -4884,8 +4884,8 @@
     "m_ObjectId": "b412f0ee82394c47848f8045c3e2580d",
     "m_Title": "Color Based",
     "m_Position": {
-        "x": -2308.800048828125,
-        "y": 831.2000122070313
+        "x": -2309.60009765625,
+        "y": 831.199951171875
     }
 }
 

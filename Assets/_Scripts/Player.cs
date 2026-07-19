@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour
     Vector3 _lastMoveDir;
 
     float _playerInteractDistance = 2;
+    float _playerRotateSpeed = 5;
 
     CharacterController _characterController;
 
@@ -14,6 +16,16 @@ public class Player : MonoBehaviour
 
     PartObject _heldPartObject;
 
+    bool _isWalking;
+
+    public static event EventHandler<PartSiteEventArgs> OnPartSiteChanged;
+
+    public class PartSiteEventArgs : EventArgs
+    {
+        public PartSite site;
+    }
+
+    [SerializeField] Transform _holdTransform;
     private void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -31,7 +43,11 @@ public class Player : MonoBehaviour
         Vector2 inputVector = GameInput.Instance.GetInputVector();
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
 
+        _isWalking = moveDir != Vector3.zero; // true if move dir is not zero
+
         _characterController.Move(moveDir * _playerSpeed * Time.deltaTime);
+
+        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * _playerRotateSpeed);
     }
     void HandleInteractionRaycast()
     {
@@ -48,13 +64,13 @@ public class Player : MonoBehaviour
             {
                 if (_hoveredPartSite == partSite) return;
 
-                _hoveredPartSite = partSite;
+                SetPartSite(partSite);
             }
         }
         else
         {
             if (_hoveredPartSite == null) return;
-            _hoveredPartSite = null;
+            SetPartSite(null);
         }
     }
 
@@ -64,7 +80,21 @@ public class Player : MonoBehaviour
         if (_heldPartObject != null) return; // player is aldready carrying something
 
         _heldPartObject = _hoveredPartSite.GetPartObject();
-        _heldPartObject.SetParent(this.transform);
+        _heldPartObject.SetParentTo(_holdTransform);
     }
 
+    public void SetPartSite(PartSite partsite)
+    {
+        _hoveredPartSite = partsite;
+
+        OnPartSiteChanged?.Invoke(this, new PartSiteEventArgs
+        {
+            site = partsite,
+        });
+    }
+
+    public bool IsPlayerWalking()
+    {
+        return _isWalking;
+    }
 }
