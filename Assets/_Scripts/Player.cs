@@ -12,17 +12,17 @@ public class Player : MonoBehaviour
 
     CharacterController _characterController;
 
-    PartSite _hoveredPartSite;
+    ICanInteract _selectedInteractSite;
 
     PartObject _heldPartObject;
 
     bool _isWalking;
 
-    public static event EventHandler<PartSiteEventArgs> OnPartSiteChanged;
+    public static event EventHandler<InteractableSiteEventArgs> OnInteractableSiteChanged;
 
-    public class PartSiteEventArgs : EventArgs
+    public class InteractableSiteEventArgs : EventArgs
     {
-        public PartSite site;
+        public ICanInteract interactale;
     }
 
     [SerializeField] Transform _holdTransform;
@@ -60,41 +60,44 @@ public class Player : MonoBehaviour
         }
         if (Physics.Raycast(transform.position, _lastMoveDir, out RaycastHit hitCounter, _playerInteractDistance))
         {
-            if (hitCounter.transform.TryGetComponent(out PartSite partSite))
+            if (hitCounter.transform.TryGetComponent(out ICanInteract interactable))
             {
-                if (_hoveredPartSite == partSite) return;
+                if (_selectedInteractSite == interactable) return;
 
-                SetPartSite(partSite);
+                SetInteractableSiteTo(interactable);
             }
         }
         else
         {
-            if (_hoveredPartSite == null) return;
-            SetPartSite(null);
+            if (_selectedInteractSite == null) return;
+            SetInteractableSiteTo(null);
         }
     }
 
     private void Input_OnEPressed(object sender, System.EventArgs e)
     {
-        if (_hoveredPartSite == null) return; // no hovered site is there
+        if (_selectedInteractSite == null) return; // no hovered site is there
         if (_heldPartObject != null) return; // player is aldready carrying something
-
-        _heldPartObject = _hoveredPartSite.GetPartObject();
-        _heldPartObject.SetParentTo(_holdTransform);
+        _selectedInteractSite.OnInteract(this);
     }
 
-    public void SetPartSite(PartSite partsite)
+    public void SetInteractableSiteTo(ICanInteract interactable)
     {
-        _hoveredPartSite = partsite;
+        _selectedInteractSite = interactable;
 
-        OnPartSiteChanged?.Invoke(this, new PartSiteEventArgs
+        OnInteractableSiteChanged?.Invoke(this, new InteractableSiteEventArgs
         {
-            site = partsite,
+            interactale = interactable,
         });
     }
 
     public bool IsPlayerWalking()
     {
         return _isWalking;
+    }
+
+    public Transform GetHoldTransform()
+    {
+        return _holdTransform;
     }
 }

@@ -8,6 +8,7 @@ public class GameInput : MonoBehaviour
     PlayerInput _playerInput;
 
     public event EventHandler OnEPressed;
+    public event EventHandler OnAnyKeyPressed;
 
     private void Awake()
     {
@@ -17,6 +18,14 @@ public class GameInput : MonoBehaviour
     private void Start()
     {
         _playerInput.player.interact.performed += Interact_performed;
+        _playerInput.player.anyButton.performed += AnyButton_performed;
+    }
+    private void OnDestroy()
+    {
+        _playerInput.player.interact.performed -= Interact_performed;
+        _playerInput.player.anyButton.performed -= AnyButton_performed;
+
+        Instance = null;
     }
     private void OnEnable()
     {
@@ -26,6 +35,11 @@ public class GameInput : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.Disable();
+    }
+
+    private void AnyButton_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnAnyKeyPressed?.Invoke(this, EventArgs.Empty);
     }
 
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

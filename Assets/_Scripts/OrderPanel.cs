@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class PartSite : MonoBehaviour , ICanInteract
+public class OrderPanel : MonoBehaviour, ICanInteract
 {
-    [SerializeField] PartObject _partObjectPacedHere;
-
     [SerializeField] GameObject _hoverVisual;
+
+    [SerializeField] GameObject _orderPanelUI;
 
     private void Start()
     {
@@ -23,15 +23,8 @@ public class PartSite : MonoBehaviour , ICanInteract
         }
     }
 
-    public PartObject GetPartObject()
-    {
-        return _partObjectPacedHere;
-    }
-
     public void OnInteract(Player player)
     {
-        if (_partObjectPacedHere == null) return;
-
-        _partObjectPacedHere.SetParentTo(player.GetHoldTransform());
+        _orderPanelUI.SetActive(true);
     }
 }
