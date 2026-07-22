@@ -31,6 +31,8 @@ public class MainMenuUI : MonoBehaviour
         _vendingMachineAnimator.Play(VENDING_MACHINE_ANIM);
         _dustParticles.SetActive(true);
 
+        SoundManager.Instance.PlayGroundSlamSound();
+
         //move the camera
         StartCoroutine(MoveCamera());
 
