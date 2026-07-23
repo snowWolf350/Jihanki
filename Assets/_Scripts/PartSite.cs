@@ -9,6 +9,8 @@ public class PartSite : MonoBehaviour , ICanInteract
     private void Start()
     {
         Player.OnInteractableSiteChanged += Player_OnPartSiteChanged;
+
+        _hoverVisual.SetActive(false);
     }
 
     private void Player_OnPartSiteChanged(object sender, Player.InteractableSiteEventArgs e)
