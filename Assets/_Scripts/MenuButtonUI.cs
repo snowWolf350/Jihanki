@@ -11,12 +11,14 @@ public class MenuButtonUI : MonoBehaviour,IPointerDownHandler,IPointerEnterHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        SoundManager.Instance.PlayCoinInsertSound();
         OnClick.Invoke();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         GetComponent<MeshRenderer>().material = _GreenMaterial;
+        SoundManager.Instance.PlayUiHoverSound();
     }
 
     public void OnPointerExit(PointerEventData eventData)

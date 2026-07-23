@@ -6834,6 +6834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
   _slamSound: {fileID: 8300000, guid: 1360163875bc2cd4da6a6760216e37f2, type: 3}
+  _coinInsertSound: {fileID: 8300000, guid: f418d1f4acf5f1642a0d0f3e9aba2135, type: 3}
+  _uiHoverSound: {fileID: 8300000, guid: d44af91367b7ff74b8fe7d8dd31c7623, type: 3}
 --- !u!82 &2013778350
 AudioSource:
   m_ObjectHideFlags: 0

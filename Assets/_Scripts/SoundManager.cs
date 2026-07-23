@@ -8,6 +8,8 @@ public class SoundManager : MonoBehaviour
 
     [Header("Main Menu")]
     [SerializeField] AudioClip _slamSound;
+    [SerializeField] AudioClip _coinInsertSound;
+    [SerializeField] AudioClip _uiHoverSound;
     float _sfxVolume = 0.6f;
 
     private void Awake()
@@ -19,5 +21,13 @@ public class SoundManager : MonoBehaviour
     public void PlayGroundSlamSound()
     {
         _audioSource.PlayOneShot(_slamSound,_sfxVolume);
+    }
+    public void PlayCoinInsertSound()
+    {
+        _audioSource.PlayOneShot(_coinInsertSound, _sfxVolume);
+    }
+    public void PlayUiHoverSound()
+    {
+        _audioSource.PlayOneShot(_uiHoverSound, _sfxVolume);
     }
 }
