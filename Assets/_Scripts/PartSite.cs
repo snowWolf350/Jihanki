@@ -6,6 +6,8 @@ public class PartSite : MonoBehaviour , ICanInteract
 
     [SerializeField] GameObject _hoverVisual;
 
+    [SerializeField] Transform _partPlaceTransform;
+
     private void Start()
     {
         Player.OnInteractableSiteChanged += Player_OnPartSiteChanged;
