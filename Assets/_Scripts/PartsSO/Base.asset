@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Base
   m_EditorClassIdentifier: Assembly-CSharp::PartsSO
   _partName: Base
+  _partObject: {fileID: 3629731548777154432, guid: e89e39b0e80835f40a2334aeeb44d9d4, type: 3}

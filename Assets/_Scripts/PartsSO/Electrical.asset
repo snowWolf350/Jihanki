@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Electrical
   m_EditorClassIdentifier: Assembly-CSharp::PartsSO
   _partName: electrical
+  _partObject: {fileID: 3629731548777154432, guid: 542feccacac1d9843ac88381c6aa9ed2, type: 3}

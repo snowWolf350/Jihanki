@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Drinks
   m_EditorClassIdentifier: Assembly-CSharp::PartsSO
   _partName: Drinks
+  _partObject: {fileID: 3629731548777154432, guid: 5a53c4f8b87d54a4f85c93aff1d5449a, type: 3}

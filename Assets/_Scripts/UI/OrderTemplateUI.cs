@@ -11,7 +11,7 @@ public class OrderTemplateUI : MonoBehaviour
     {
         _buyButton.onClick.AddListener(() =>
         {
-            Debug.Log("Bought " + _partsSO._partName);
+            ShopUI.Instance.BuyPart(_partsSO);
         });
     }
 
