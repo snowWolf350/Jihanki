@@ -4,11 +4,15 @@ public class OrderPanel : MonoBehaviour, ICanInteract
 {
     [SerializeField] GameObject _hoverVisual;
 
-    [SerializeField] GameObject _orderPanelUI;
+    [SerializeField] GameObject _shopUI;
+
+    bool _inShop;
 
     private void Start()
     {
         Player.OnInteractableSiteChanged += Player_OnPartSiteChanged;
+
+        HideShop();
     }
 
     private void Player_OnPartSiteChanged(object sender, Player.InteractableSiteEventArgs e)
@@ -25,6 +29,27 @@ public class OrderPanel : MonoBehaviour, ICanInteract
 
     public void OnInteract(Player player)
     {
-        _orderPanelUI.SetActive(true);
+        if (_inShop)
+        {
+            //we are aldready in shop and should close it 
+            _inShop = false;
+            HideShop();
+            CameraController.Instance.SetTargetTo(player.transform);
+        }
+        else
+        {
+            _inShop = true;
+            ShowShop();
+            CameraController.Instance.SetTargetTo(_shopUI.transform);
+        }
+    }
+
+    public void ShowShop()
+    {
+        _shopUI.SetActive(true);
+    }
+    public void HideShop()
+    {
+        _shopUI.SetActive(false);
     }
 }

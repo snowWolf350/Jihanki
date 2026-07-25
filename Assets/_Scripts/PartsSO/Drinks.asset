@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65dd4c34a195c644d8089922cbb4ab7b, type: 3}
   m_Name: Drinks
   m_EditorClassIdentifier: Assembly-CSharp::PartsSO
-  _partName: 
+  _partName: Drinks
