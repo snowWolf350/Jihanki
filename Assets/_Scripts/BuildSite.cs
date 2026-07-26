@@ -2,14 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class BuildSite : MonoBehaviour , ICanInteract , IHasProgress
+public class BuildSite : InteractSite , ICanInteract , IHasProgress
 {
-    PartObject _baseObjectPacedHere;
-
-    [SerializeField] GameObject _hoverVisual;
-
-    [SerializeField] Transform _partPlaceTransform;
-
     [SerializeField] List<PartsSO> _buildOrder;
 
     [SerializeField] List<PartSO_GameObjects> PartsSO_GameObjectsList; 
@@ -32,19 +26,19 @@ public class BuildSite : MonoBehaviour , ICanInteract , IHasProgress
     {
         if (player.TryGetHeldPartObject(out PartObject partObject))
         {
-            _baseObjectPacedHere = partObject;
+            _partObjectPacedHere = partObject;
             //player is holding something
-            if (_baseObjectPacedHere.GetPartsSO() == _buildOrder[_buildIndex])
+            if (_partObjectPacedHere.GetPartsSO() == _buildOrder[_buildIndex])
             {
                 //this is the part needed for building
-                _baseObjectPacedHere.SetParentTo(_partPlaceTransform);
+                _partObjectPacedHere.SetParentTo(_partPlaceTransform);
                 player.SetPartObject(null);
             }
         }
     }
     public void OnAltInteract(Player player)
     {
-        if (_baseObjectPacedHere == null) return;
+        if (_partObjectPacedHere == null) return;
         if (_buildIndex != 0) return;
 
         //base obj is placed here
@@ -61,7 +55,7 @@ public class BuildSite : MonoBehaviour , ICanInteract , IHasProgress
         {
             foreach (PartSO_GameObjects p_go in PartsSO_GameObjectsList)
             {
-                if (p_go.partsSO == _baseObjectPacedHere.GetPartsSO())
+                if (p_go.partsSO == _partObjectPacedHere.GetPartsSO())
                 {
                     p_go.GameObject.SetActive(true);
                 }
@@ -71,24 +65,4 @@ public class BuildSite : MonoBehaviour , ICanInteract , IHasProgress
             _buildIndex++;
         }
     }
-
-    private void Start()
-    {
-        Player.OnInteractableSiteChanged += Player_OnPartSiteChanged;
-
-        _hoverVisual.SetActive(false);
-    }
-
-    private void Player_OnPartSiteChanged(object sender, Player.InteractableSiteEventArgs e)
-    {
-        if (e.interactale == this as ICanInteract)
-        {
-            _hoverVisual.SetActive(true);
-        }
-        else
-        {
-            _hoverVisual.SetActive(false);
-        }
-    }
-
 }

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459e0af0e02b86c43b95510e71bfcbe6, type: 3}
+  m_Name: pcb
+  m_EditorClassIdentifier: Assembly-CSharp::ElectricRecipeSO
+  input: {fileID: 11400000, guid: c33266c5be0e72947977999f1c853bef, type: 2}
+  output: {fileID: 11400000, guid: 9fa93936ca040ae49abe63706f518f68, type: 2}

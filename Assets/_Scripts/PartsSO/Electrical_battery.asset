@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65dd4c34a195c644d8089922cbb4ab7b, type: 3}
-  m_Name: Base
+  m_Name: Electrical_battery
   m_EditorClassIdentifier: Assembly-CSharp::PartsSO
-  _partName: Base
-  _partObject: {fileID: 3629731548777154432, guid: e89e39b0e80835f40a2334aeeb44d9d4, type: 3}
+  _partName: Electrical parts
+  _partObject: {fileID: 3629731548777154432, guid: 530651d18f15d444ab4a6426a524bd3d, type: 3}

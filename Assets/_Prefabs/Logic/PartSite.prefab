@@ -69,7 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82752a101908a94c84a6671d7f6cb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartObject
-  _partObjectPacedHere: {fileID: 0}
   _hoverVisual: {fileID: 4724392622878024652}
   _partPlaceTransform: {fileID: 1025178981886247660}
 --- !u!1 &5714780600286307900
