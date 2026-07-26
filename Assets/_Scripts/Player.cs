@@ -32,12 +32,16 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] Transform _holdTransform;
+
+
     private void Start()
     {
         _characterController = GetComponent<CharacterController>();
 
         GameInput.Instance.OnEPressed += Input_OnEPressed;
+        GameInput.Instance.OnFPressed += Input_OnFPressed;
     }
+
 
     private void Update()
     {
@@ -101,15 +105,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Input_OnFPressed(object sender, EventArgs e)
+    {
+        if (_selectedInteractSite == null) return;
+
+        _selectedInteractSite.OnAltInteract(this);
+    }
     private void Input_OnEPressed(object sender, System.EventArgs e)
     {
         if (_selectedInteractSite == null) return; // no hovered site is there
-        if (_heldPartObject != null) return; // player is aldready carrying something
+
         _selectedInteractSite.OnInteract(this);
     }
 
     public void SetInteractableSiteTo(ICanInteract interactable)
     {
+
         _selectedInteractSite = interactable;
 
         OnInteractableSiteChanged?.Invoke(this, new InteractableSiteEventArgs
@@ -121,6 +132,22 @@ public class Player : MonoBehaviour
     public bool IsPlayerWalking()
     {
         return _isWalking;
+    }
+
+    public void SetPartObject(PartObject partObject)
+    {
+        _heldPartObject = partObject;
+    }
+
+    public bool TryGetHeldPartObject(out PartObject partobject)
+    {
+        if (_heldPartObject == null)
+        {
+            partobject = null;
+            return false;
+        }
+        partobject = _heldPartObject;
+        return true;
     }
 
     public Transform GetHoldTransform()

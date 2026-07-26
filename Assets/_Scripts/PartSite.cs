@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PartSite : MonoBehaviour , ICanInteract
 {
-    [SerializeField] PartObject _partObjectPacedHere;
+    PartObject _partObjectPacedHere;
 
     [SerializeField] GameObject _hoverVisual;
 
@@ -44,10 +44,17 @@ public class PartSite : MonoBehaviour , ICanInteract
         if (_partObjectPacedHere == null) return;
 
         _partObjectPacedHere.SetParentTo(player.GetHoldTransform());
+        player.SetPartObject(_partObjectPacedHere);
+        _partObjectPacedHere = null;
     }
 
     public bool IsPartPlacedHere()
     {
         return _partObjectPacedHere != null;
+    }
+
+    public void OnAltInteract(Player player)
+    {
+
     }
 }

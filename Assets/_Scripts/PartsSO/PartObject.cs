@@ -10,4 +10,8 @@ public class PartObject : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
     }
+    public PartsSO GetPartsSO()
+    {
+        return _partsSO;
+    }
 }

@@ -52,4 +52,9 @@ public class OrderPanel : MonoBehaviour, ICanInteract
     {
         _shopUI.SetActive(false);
     }
+
+    public void OnAltInteract(Player player)
+    {
+
+    }
 }

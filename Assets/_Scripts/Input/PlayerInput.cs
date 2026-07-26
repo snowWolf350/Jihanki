@@ -118,6 +118,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""altinteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c7a81d5-6407-4ab4-833a-de68a5fe4d26"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -197,6 +206,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""anyButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b77daab3-96a0-488c-97f9-8f6a8f01893d"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""altinteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -208,6 +228,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_player_move = m_player.FindAction("move", throwIfNotFound: true);
         m_player_interact = m_player.FindAction("interact", throwIfNotFound: true);
         m_player_anyButton = m_player.FindAction("anyButton", throwIfNotFound: true);
+        m_player_altinteract = m_player.FindAction("altinteract", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -291,6 +312,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_player_move;
     private readonly InputAction m_player_interact;
     private readonly InputAction m_player_anyButton;
+    private readonly InputAction m_player_altinteract;
     /// <summary>
     /// Provides access to input actions defined in input action map "player".
     /// </summary>
@@ -314,6 +336,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "player/anyButton".
         /// </summary>
         public InputAction @anyButton => m_Wrapper.m_player_anyButton;
+        /// <summary>
+        /// Provides access to the underlying input action "player/altinteract".
+        /// </summary>
+        public InputAction @altinteract => m_Wrapper.m_player_altinteract;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -349,6 +375,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @anyButton.started += instance.OnAnyButton;
             @anyButton.performed += instance.OnAnyButton;
             @anyButton.canceled += instance.OnAnyButton;
+            @altinteract.started += instance.OnAltinteract;
+            @altinteract.performed += instance.OnAltinteract;
+            @altinteract.canceled += instance.OnAltinteract;
         }
 
         /// <summary>
@@ -369,6 +398,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @anyButton.started -= instance.OnAnyButton;
             @anyButton.performed -= instance.OnAnyButton;
             @anyButton.canceled -= instance.OnAnyButton;
+            @altinteract.started -= instance.OnAltinteract;
+            @altinteract.performed -= instance.OnAltinteract;
+            @altinteract.canceled -= instance.OnAltinteract;
         }
 
         /// <summary>
@@ -430,5 +462,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAnyButton(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "altinteract" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAltinteract(InputAction.CallbackContext context);
     }
 }

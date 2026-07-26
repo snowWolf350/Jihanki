@@ -8,6 +8,7 @@ public class GameInput : MonoBehaviour
     PlayerInput _playerInput;
 
     public event EventHandler OnEPressed;
+    public event EventHandler OnFPressed;
     public event EventHandler OnAnyKeyPressed;
 
     private void Awake()
@@ -18,8 +19,10 @@ public class GameInput : MonoBehaviour
     private void Start()
     {
         _playerInput.player.interact.performed += Interact_performed;
+        _playerInput.player.altinteract.performed += Altinteract_performed;
         _playerInput.player.anyButton.performed += AnyButton_performed;
     }
+
     private void OnDestroy()
     {
         _playerInput.player.interact.performed -= Interact_performed;
@@ -46,6 +49,12 @@ public class GameInput : MonoBehaviour
     {
         OnEPressed?.Invoke(this, EventArgs.Empty);
     }
+
+    private void Altinteract_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnFPressed?.Invoke(this, EventArgs.Empty);  
+    }
+
     public Vector2 GetInputVector()
     {
         Vector2 inputVector = _playerInput.player.move.ReadValue<Vector2>();
