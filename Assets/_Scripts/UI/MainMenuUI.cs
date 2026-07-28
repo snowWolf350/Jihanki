@@ -7,10 +7,9 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] GameObject _startScreen;
 
 
-    [Header("Camera Transforms")]
-    [SerializeField] Transform _cameraTransform;
-    [SerializeField] Transform _cameraStartTransform;
-    [SerializeField] Transform _cameraEndTransform;
+    [Header("Camera Move animation")]
+    [SerializeField]Animator _cameraAnimator;
+    const string _MOVE = "move";
 
     [Header("Vending Machine Animation")]
     [SerializeField] Animator _vendingMachineAnimator;
@@ -34,22 +33,10 @@ public class MainMenuUI : MonoBehaviour
         SoundManager.Instance.PlayGroundSlamSound();
 
         //move the camera
-        StartCoroutine(MoveCamera());
+        _cameraAnimator.SetTrigger(_MOVE);
 
         //dont read any more random buttons
         GameInput.Instance.OnAnyKeyPressed -= GameInput_OnAnyKeyPressed;
     }
 
-    IEnumerator MoveCamera()
-    {
-        float t = 0;
-        while (t <= 1)
-        {
-            _cameraTransform.position = Vector3.Lerp(_cameraStartTransform.position, _cameraEndTransform.position, t);
-            _cameraTransform.forward = Vector3.Slerp(_cameraStartTransform.forward, _cameraEndTransform.forward, t);
-            t += Time.deltaTime;
-            yield return null;
-        }
-        _cameraTransform = _cameraEndTransform;
-    }
 }
