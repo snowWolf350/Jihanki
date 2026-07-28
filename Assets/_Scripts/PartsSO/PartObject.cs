@@ -4,9 +4,19 @@ public class PartObject : MonoBehaviour
 {
     [SerializeField] PartsSO _partsSO;
 
-    public void SetParentTo(Transform parentTransform)
+    IPartParent _currentParent;
+
+    public void SetParentTo(IPartParent newPartParent)
     {
-        transform.parent = parentTransform;
+        if (_currentParent != null)
+        {
+            _currentParent.SetPartObjectTo(null);
+        }
+
+        _currentParent = newPartParent;
+        _currentParent.SetPartObjectTo(this);
+
+        transform.parent = newPartParent.GetPlacementTransform();
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
     }

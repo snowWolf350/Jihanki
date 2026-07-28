@@ -1,8 +1,7 @@
 using System;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IPartParent
 {
     float _playerSpeed = 5;
 
@@ -150,8 +149,14 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    public Transform GetHoldTransform()
+
+    public Transform GetPlacementTransform()
     {
         return _holdTransform;
+    }
+
+    public void SetPartObjectTo(PartObject partobject)
+    {
+        _heldPartObject = partobject;
     }
 }

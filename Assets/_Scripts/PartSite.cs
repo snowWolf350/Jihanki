@@ -11,14 +11,21 @@ public class PartSite : InteractSite , ICanInteract
 
     public void OnInteract(Player player)
     {
-        if (_partObjectPacedHere == null) return;
-
-        _partObjectPacedHere.SetParentTo(player.GetHoldTransform());
-        player.SetPartObject(_partObjectPacedHere);
-        _partObjectPacedHere = null;
+        if (player.TryGetHeldPartObject(out PartObject partobject))
+        {
+            //player is carrying a partobj
+            partobject.SetParentTo(this);
+        }
+        else
+        {
+            //player is not carrying any obj
+            if (_partObjectPacedHere == null) return; // if site is empty
+            _partObjectPacedHere.SetParentTo(player);
+        }
     }
     public void OnAltInteract(Player player)
     {
 
     }
+
 }

@@ -31,8 +31,7 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
             if (_partObjectPacedHere.GetPartsSO() == _buildOrder[_buildIndex])
             {
                 //this is the part needed for building
-                _partObjectPacedHere.SetParentTo(_partPlaceTransform);
-                player.SetPartObject(null);
+                _partObjectPacedHere.SetParentTo(this);
             }
         }
     }

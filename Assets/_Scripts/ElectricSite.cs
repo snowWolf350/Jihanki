@@ -44,8 +44,7 @@ public class ElectricSite : InteractSite, ICanInteract , IHasProgress
             {
                 if (partObject.GetPartsSO() == electricRecipe.input)
                 {
-                    partObject.SetParentTo(_partPlaceTransform);
-                    _partObjectPacedHere = partObject;
+                    partObject.SetParentTo(this);
                     _currentElecRecipe = electricRecipe;
                     break;
                 }

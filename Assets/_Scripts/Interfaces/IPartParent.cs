@@ -2,5 +2,7 @@ using UnityEngine;
 
 public interface IPartParent
 {
-    public void SetParent();
+    public Transform GetPlacementTransform();
+
+    public void SetPartObjectTo(PartObject partobject);
 }

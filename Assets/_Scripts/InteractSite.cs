@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InteractSite : MonoBehaviour 
+public class InteractSite : MonoBehaviour ,IPartParent
 {
     protected PartObject _partObjectPacedHere;
 
@@ -36,4 +36,13 @@ public class InteractSite : MonoBehaviour
         return _partObjectPacedHere != null;
     }
 
+    public Transform GetPlacementTransform()
+    {
+        return _partPlaceTransform;
+    }
+
+    public void SetPartObjectTo(PartObject partobject)
+    {
+        _partObjectPacedHere = partobject;
+    }
 }
