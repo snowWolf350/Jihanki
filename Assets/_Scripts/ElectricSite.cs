@@ -15,7 +15,8 @@ public class ElectricSite : InteractSite, ICanInteract , IHasProgress
 
     public void OnAltInteract(Player player)
     {
-        if (_partObjectPacedHere == null) return;
+        if (_partObjectPacedHere == null) return; // no object is placed here
+        if (_partObjectPacedHere.GetPartsSO() == _currentElecRecipe.output) return; // aldready got the output
 
         _buildAmount++;
 
@@ -49,6 +50,12 @@ public class ElectricSite : InteractSite, ICanInteract , IHasProgress
                     break;
                 }
             }
+        }
+        else
+        {
+            if (_partObjectPacedHere == null) return;
+
+            _partObjectPacedHere.SetParentTo(player);
         }
     }
 }

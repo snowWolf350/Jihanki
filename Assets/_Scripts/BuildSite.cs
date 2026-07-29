@@ -13,6 +13,8 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
     float _buildAmount;
     float _buildAmountMax = 5;
 
+    bool _baseBuilt;
+
     public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
 
     [Serializable]
@@ -26,12 +28,17 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
     {
         if (player.TryGetHeldPartObject(out PartObject partObject))
         {
-            _partObjectPacedHere = partObject;
             //player is holding something
-            if (_partObjectPacedHere.GetPartsSO() == _buildOrder[_buildIndex])
+            if (partObject.GetPartsSO() == _buildOrder[_buildIndex])
             {
                 //this is the part needed for building
-                _partObjectPacedHere.SetParentTo(this);
+                partObject.SetParentTo(this);
+
+                if (_baseBuilt == false) return; // base is not done yet
+
+                //base is done can add electric and drinks
+                ShowPartVisual();
+                _buildIndex++;
             }
         }
     }
@@ -52,16 +59,22 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
 
         if (_buildAmount >= _buildAmountMax)
         {
-            foreach (PartSO_GameObjects p_go in PartsSO_GameObjectsList)
-            {
-                if (p_go.partsSO == _partObjectPacedHere.GetPartsSO())
-                {
-                    p_go.GameObject.SetActive(true);
-                }
-            }
+            ShowPartVisual();
 
             _buildAmount = 0;
             _buildIndex++;
+            _baseBuilt = true;
+        }
+    }
+
+    void ShowPartVisual()
+    {
+        foreach (PartSO_GameObjects p_go in PartsSO_GameObjectsList)
+        {
+            if (p_go.partsSO == _partObjectPacedHere.GetPartsSO())
+            {
+                p_go.GameObject.SetActive(true);
+            }
         }
     }
 }

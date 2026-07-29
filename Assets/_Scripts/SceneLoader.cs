@@ -1,20 +1,29 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    
+    [SerializeField] Animator _levelTransitionAnim;
 
     public void LoadGame()
     {
-        SceneManager.LoadScene(1);
+        StartCoroutine(LoadNewScene(1));
     }
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(0);
+        StartCoroutine(LoadNewScene(0));
     }
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    IEnumerator LoadNewScene(int buildIndex)
+    {
+        _levelTransitionAnim.SetTrigger("start");
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadScene(buildIndex);
     }
 }
