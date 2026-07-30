@@ -6,7 +6,7 @@ public class PartSite : InteractSite , ICanInteract
     {
         GameObject spawnedPart =  Instantiate(partsSO._partObject,_partPlaceTransform);
 
-        _partObjectPacedHere = spawnedPart.GetComponent<PartObject>();
+        spawnedPart.GetComponent<PartObject>().SetParentTo(this);
     }
 
     public void OnInteract(Player player)

@@ -32,15 +32,15 @@ public class OrderPanel : MonoBehaviour, ICanInteract
         if (_inShop)
         {
             //we are aldready in shop and should close it 
+            GameManager.Instance.SetGameStateToPlaying();
             _inShop = false;
             HideShop();
-            CameraController.Instance.SetTargetTo(player.transform);
         }
         else
         {
+            GameManager.Instance.SetGameStateToMenu();
             _inShop = true;
             ShowShop();
-            CameraController.Instance.SetTargetTo(_shopUI.transform);
         }
     }
 

@@ -5,13 +5,13 @@ public class OrderTemplateUI : MonoBehaviour
 {
     [SerializeField] Button _buyButton;
 
-    PartsSO _partsSO;
+    [SerializeField]PartsSO _partsSO;
 
     private void Awake()
     {
         _buyButton.onClick.AddListener(() =>
         {
-            ShopUI.Instance.BuyPart(_partsSO);
+            ShopManager.Instance.BuyPart(_partsSO);
         });
     }
 

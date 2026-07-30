@@ -18,6 +18,7 @@ public class Player : MonoBehaviour,IPartParent
     PartObject _heldPartObject;
 
     bool _isWalking;
+    bool _canWalk = true;
     bool _isGrounded;
 
     float verticalVelocity;
@@ -39,11 +40,14 @@ public class Player : MonoBehaviour,IPartParent
 
         GameInput.Instance.OnEPressed += Input_OnEPressed;
         GameInput.Instance.OnFPressed += Input_OnFPressed;
-    }
 
+        GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
+    }
 
     private void Update()
     {
+        if (_canWalk == false) return;
+
         HandleMovement();
         HandleInteractionRaycast();
     }
@@ -116,6 +120,12 @@ public class Player : MonoBehaviour,IPartParent
 
         _selectedInteractSite.OnInteract(this);
     }
+
+    private void GameManager_OnGameStateChanged(object sender, EventArgs e)
+    {
+        _canWalk = !GameManager.Instance.IsGameInMenu(); // if game is in menu he cannot walk
+    }
+
 
     public void SetInteractableSiteTo(ICanInteract interactable)
     {

@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ShopUI : MonoBehaviour
+public class ShopManager : MonoBehaviour
 {
-    public static ShopUI Instance;
+    public static ShopManager Instance;
 
     [SerializeField] Transform _orderContainer;
     [SerializeField] GameObject _orderTemplate;
@@ -15,14 +15,7 @@ public class ShopUI : MonoBehaviour
     {
         Instance = this;
 
-        foreach(PartsSO partsSO in _partsSOList)
-        {
-            GameObject newPart = Instantiate(_orderTemplate, _orderContainer);
-
-            newPart.GetComponent<OrderTemplateUI>().SetPartTo(partsSO);
-
-            newPart.SetActive(true);
-        }
+        SpawnPartTemplatesUI();
     }
 
     public void BuyPart(PartsSO partsSO)
@@ -50,5 +43,17 @@ public class ShopUI : MonoBehaviour
 
         availiblePartSite.SpawnPart(partsSO);
 
+    }
+
+    void SpawnPartTemplatesUI()
+    {
+        foreach (PartsSO partsSO in _partsSOList) // foreach partso in this list
+        {
+            GameObject newPart = Instantiate(_orderTemplate, _orderContainer); // create a new template in the container
+
+            newPart.GetComponent<OrderTemplateUI>().SetPartTo(partsSO); // set the part in the template to this
+
+            newPart.SetActive(true); // game object set active
+        }
     }
 }

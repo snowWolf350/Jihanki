@@ -10,8 +10,6 @@ public class LoadingScreen : MonoBehaviour
 
         while (operation.isDone == false)
         {
-            Debug.Log(operation.progress);
-
             yield return null;
         }
     }
