@@ -6,7 +6,9 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
 {
     [SerializeField] List<PartsSO> _buildOrder;
 
-    [SerializeField] List<PartSO_GameObjects> PartsSO_GameObjectsList; 
+    [SerializeField] List<PartSO_GameObjects> PartsSO_GameObjectsList;
+
+    List<PartsSO> _partsList;
 
     int _buildIndex = 0;
 
@@ -23,7 +25,10 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
         public PartsSO partsSO;
         public GameObject GameObject;   
     }
-
+    private void Awake()
+    {
+        _partsList = new List<PartsSO>();
+    }
     public void OnInteract(Player player)
     {
         if (player.TryGetHeldPartObject(out PartObject partObject))
@@ -37,6 +42,7 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
                 if (_baseBuilt == false) return; // base is not done yet
 
                 //base is done can add electric and drinks
+                _partsList.Add(partObject.GetPartsSO());
                 ShowPartVisual();
                 _buildIndex++;
             }
@@ -60,6 +66,8 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
         if (_buildAmount >= _buildAmountMax)
         {
             ShowPartVisual();
+
+            _partsList.Add(_partObjectPacedHere.GetPartsSO());    
 
             _buildAmount = 0;
             _buildIndex++;

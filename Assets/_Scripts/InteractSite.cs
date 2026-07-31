@@ -8,6 +8,8 @@ public class InteractSite : MonoBehaviour ,IPartParent
 
     [SerializeField] protected Transform _partPlaceTransform;
 
+    bool _isPartObjectPlacedHere;
+
     private void Start()
     {
         Player.OnInteractableSiteChanged += Player_OnPartSiteChanged;
@@ -33,7 +35,11 @@ public class InteractSite : MonoBehaviour ,IPartParent
     }
     public bool IsPartPlacedHere()
     {
-        return _partObjectPacedHere != null;
+        return _isPartObjectPlacedHere;
+    }
+    public void SetIsPartObjectPlacedHereTo(bool value)
+    {
+        _isPartObjectPlacedHere = value;
     }
 
     public Transform GetPlacementTransform()

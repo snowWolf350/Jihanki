@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -11,14 +12,28 @@ public class ShopManager : MonoBehaviour
     [SerializeField] List<PartsSO> _partsSOList;
 
     [SerializeField] List<PartSite> _partSiteList;
+
+    [SerializeField] Button _confirmBuyButton;
+
+    List<PartSite> _availiblePartSitesList;
+
+    List<PartsSO> _addedPartsList;
     private void Awake()
     {
         Instance = this;
 
+        _availiblePartSitesList = new List<PartSite>();
+        _addedPartsList = new List<PartsSO>();
+
         SpawnPartTemplatesUI();
+
+        _confirmBuyButton.onClick.AddListener(() =>
+        {
+            ConfirmBuy();
+        });
     }
 
-    public void BuyPart(PartsSO partsSO)
+    public void AddToCart(PartsSO partsSO)
     {
         bool partSiteIsAvailible = false ;
         PartSite availiblePartSite = null;
@@ -29,6 +44,7 @@ public class ShopManager : MonoBehaviour
 
             //this part Site is empty
             partSiteIsAvailible = true;
+            partSite.SetIsPartObjectPlacedHereTo(true);
             availiblePartSite = partSite;
             break;
         }
@@ -41,8 +57,18 @@ public class ShopManager : MonoBehaviour
 
         //partsite is availible
 
-        availiblePartSite.SpawnPart(partsSO);
+        _availiblePartSitesList.Add(availiblePartSite);
+        _addedPartsList.Add(partsSO);
+    }
 
+    public void ConfirmBuy()
+    {
+        if (_addedPartsList.Count == 0) return;
+
+        for (int i = 0; i < _availiblePartSitesList.Count; i++)
+        {
+            _availiblePartSitesList[i].SpawnPart(_addedPartsList[i]);
+        }
     }
 
     void SpawnPartTemplatesUI()

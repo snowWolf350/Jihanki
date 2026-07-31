@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Pcb_Parts
   m_EditorClassIdentifier: Assembly-CSharp::PartsSO
   _partName: PCB parts
+  _partSprite: {fileID: 21300000, guid: d4d949f6b47fa37468e60efd913b1608, type: 3}
   _partObject: {fileID: 3629731548777154432, guid: 130a2e4e4dafde9438e2a9e33d3f84ee, type: 3}

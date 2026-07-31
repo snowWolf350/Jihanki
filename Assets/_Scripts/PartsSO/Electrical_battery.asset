@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Electrical_battery
   m_EditorClassIdentifier: Assembly-CSharp::PartsSO
   _partName: Electrical parts
+  _partSprite: {fileID: 21300000, guid: d4d949f6b47fa37468e60efd913b1608, type: 3}
   _partObject: {fileID: 3629731548777154432, guid: 530651d18f15d444ab4a6426a524bd3d, type: 3}
