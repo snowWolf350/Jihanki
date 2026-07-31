@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class OrderTemplateUI : MonoBehaviour
     [SerializeField]PartsSO _partsSO;
 
     [SerializeField] Image _partImage;
+
+    [SerializeField] TextMeshProUGUI _partCostText;
 
     private void Awake()
     {
@@ -21,5 +24,6 @@ public class OrderTemplateUI : MonoBehaviour
     {
         _partsSO = partsSO;
         _partImage.sprite = partsSO._partSprite;
+        _partCostText.text = partsSO._partCost.ToString();
     }
 }

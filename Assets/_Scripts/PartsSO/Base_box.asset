@@ -15,3 +15,4 @@ MonoBehaviour:
   _partName: Base Parts
   _partSprite: {fileID: 21300000, guid: e7875be17ac70d843a25968c808f4951, type: 3}
   _partObject: {fileID: 3629731548777154432, guid: e89e39b0e80835f40a2334aeeb44d9d4, type: 3}
+  _partCost: 500

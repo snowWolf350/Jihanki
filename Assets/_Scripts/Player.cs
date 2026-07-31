@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour,IPartParent
 {
+
+
+    #region|---Movement_Variables---|
     float _playerSpeed = 5;
 
     Vector3 _lastMoveDir;
@@ -11,11 +14,6 @@ public class Player : MonoBehaviour,IPartParent
     float _playerInteractDistance = 2;
     float _playerRotateSpeed = 5;
 
-    CharacterController _characterController;
-
-    ICanInteract _selectedInteractSite;
-
-    PartObject _heldPartObject;
 
     bool _isWalking;
     bool _canWalk = true;
@@ -23,6 +21,15 @@ public class Player : MonoBehaviour,IPartParent
 
     float verticalVelocity;
     float _gravity = -9.8f;
+
+    #endregion
+
+
+    CharacterController _characterController;
+
+    ICanInteract _selectedInteractSite;
+
+    PartObject _heldPartObject;
 
     public static event EventHandler<InteractableSiteEventArgs> OnInteractableSiteChanged;
 
@@ -32,7 +39,6 @@ public class Player : MonoBehaviour,IPartParent
     }
 
     [SerializeField] Transform _holdTransform;
-
 
     private void Start()
     {
@@ -127,27 +133,7 @@ public class Player : MonoBehaviour,IPartParent
     }
 
 
-    public void SetInteractableSiteTo(ICanInteract interactable)
-    {
-
-        _selectedInteractSite = interactable;
-
-        OnInteractableSiteChanged?.Invoke(this, new InteractableSiteEventArgs
-        {
-            interactale = interactable,
-        });
-    }
-
-    public bool IsPlayerWalking()
-    {
-        return _isWalking;
-    }
-
-    public void SetPartObject(PartObject partObject)
-    {
-        _heldPartObject = partObject;
-    }
-
+    #region|---Getters---|
     public bool TryGetHeldPartObject(out PartObject partobject)
     {
         if (_heldPartObject == null)
@@ -165,8 +151,36 @@ public class Player : MonoBehaviour,IPartParent
         return _holdTransform;
     }
 
+    public bool IsPlayerWalking()
+    {
+        return _isWalking;
+    }
+
+    #endregion
+
+    #region|---Setters---|
+
+    public void SetInteractableSiteTo(ICanInteract interactable)
+    {
+
+        _selectedInteractSite = interactable;
+
+        OnInteractableSiteChanged?.Invoke(this, new InteractableSiteEventArgs
+        {
+            interactale = interactable,
+        });
+    }
+
+    public void SetPartObject(PartObject partObject)
+    {
+        _heldPartObject = partObject;
+    }
+
+
+
     public void SetPartObjectTo(PartObject partobject)
     {
         _heldPartObject = partobject;
     }
+    #endregion
 }

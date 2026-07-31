@@ -1,15 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager Instance;
-
-    [SerializeField] Transform _orderContainer;
-    [SerializeField] GameObject _orderTemplate;
-
-    [SerializeField] List<PartsSO> _partsSOList;
 
     [SerializeField] List<PartSite> _partSiteList;
 
@@ -18,6 +14,17 @@ public class ShopManager : MonoBehaviour
     List<PartSite> _availiblePartSitesList;
 
     List<PartsSO> _addedPartsList;
+
+    int _currentMoney = 1000;
+
+    int _cartCost;
+
+    public static event EventHandler OnPartAddedSuccesfully;
+    public static event EventHandler OnNoAvailiblePartSite;
+    public static event EventHandler OnNoMoney;
+
+    public static event EventHandler OnConfirmBuy;
+
     private void Awake()
     {
         Instance = this;
@@ -25,11 +32,11 @@ public class ShopManager : MonoBehaviour
         _availiblePartSitesList = new List<PartSite>();
         _addedPartsList = new List<PartsSO>();
 
-        SpawnPartTemplatesUI();
-
         _confirmBuyButton.onClick.AddListener(() =>
         {
             ConfirmBuy();
+            ClearCart();
+            OnConfirmBuy?.Invoke(this, EventArgs.Empty);
         });
     }
 
@@ -52,13 +59,32 @@ public class ShopManager : MonoBehaviour
         if (partSiteIsAvailible == false)
         {
             Debug.Log("no space");
+            OnNoAvailiblePartSite?.Invoke(this, EventArgs.Empty);
             return;
         }
 
         //partsite is availible
 
+        if (_cartCost + partsSO._partCost > _currentMoney)
+        {
+            Debug.Log("No money");
+            OnNoMoney?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        _cartCost += partsSO._partCost;
+
         _availiblePartSitesList.Add(availiblePartSite);
         _addedPartsList.Add(partsSO);
+
+        OnPartAddedSuccesfully?.Invoke(this, EventArgs.Empty);
+
+    }
+
+    void ClearCart()
+    {
+        _availiblePartSitesList.Clear();
+        _addedPartsList.Clear();
     }
 
     public void ConfirmBuy()
@@ -71,15 +97,18 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    void SpawnPartTemplatesUI()
+    public int GetCartCost()
     {
-        foreach (PartsSO partsSO in _partsSOList) // foreach partso in this list
-        {
-            GameObject newPart = Instantiate(_orderTemplate, _orderContainer); // create a new template in the container
+        return _cartCost;
+    }
 
-            newPart.GetComponent<OrderTemplateUI>().SetPartTo(partsSO); // set the part in the template to this
+    public int GetCurrentAmount()
+    {
+        return _currentMoney;
+    }
 
-            newPart.SetActive(true); // game object set active
-        }
+    public List<PartsSO> GetAddedPartsList()
+    {
+        return _addedPartsList;
     }
 }

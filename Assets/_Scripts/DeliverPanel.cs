@@ -4,7 +4,7 @@ public class DeliverPanel : MonoBehaviour, ICanInteract
 {
     [SerializeField] GameObject _hoverVisual;
 
-    [SerializeField] GameObject _shopUI;
+    [SerializeField] GameObject _DeliveryShopUI;
 
     bool _inShop;
 
@@ -28,20 +28,32 @@ public class DeliverPanel : MonoBehaviour, ICanInteract
     }
     public void OnAltInteract(Player player)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void OnInteract(Player player)
     {
-        throw new System.NotImplementedException();
+        if (_inShop)
+        {
+            //we are aldready in shop and should close it 
+            GameManager.Instance.SetGameStateToPlaying();
+            _inShop = false;
+            HideShop();
+        }
+        else
+        {
+            GameManager.Instance.SetGameStateToMenu();
+            _inShop = true;
+            ShowShop();
+        }
     }
 
     public void ShowShop()
     {
-        _shopUI.SetActive(true);
+        _DeliveryShopUI.SetActive(true);
     }
     public void HideShop()
     {
-        _shopUI.SetActive(false);
+        _DeliveryShopUI.SetActive(false);
     }
 }

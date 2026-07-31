@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Battery_parts
   m_EditorClassIdentifier: Assembly-CSharp::PartsSO
   _partName: Battery parts
+  _partSprite: {fileID: 0}
   _partObject: {fileID: 3629731548777154432, guid: 130a2e4e4dafde9438e2a9e33d3f84ee, type: 3}
+  _partCost: 150
