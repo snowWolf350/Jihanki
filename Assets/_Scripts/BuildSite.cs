@@ -85,4 +85,21 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
             }
         }
     }
+
+    public void ClearBuild()
+    {
+        _partsList.Clear();
+        _buildIndex = 0;
+        _baseBuilt = false;
+
+        foreach (PartSO_GameObjects p_go in PartsSO_GameObjectsList)
+        {
+            p_go.GameObject?.SetActive(false);
+        }
+    }
+
+    public List<PartsSO> GetPartsSOList()
+    {
+        return _partsList;
+    }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class ShopManager : MonoBehaviour
     [SerializeField] List<PartSite> _partSiteList;
 
     [SerializeField] Button _confirmBuyButton;
+
+    [SerializeField] TextMeshProUGUI _moneyText;
 
     List<PartSite> _availiblePartSitesList;
 
@@ -35,8 +38,6 @@ public class ShopManager : MonoBehaviour
         _confirmBuyButton.onClick.AddListener(() =>
         {
             ConfirmBuy();
-            ClearCart();
-            OnConfirmBuy?.Invoke(this, EventArgs.Empty);
         });
     }
 
@@ -95,6 +96,18 @@ public class ShopManager : MonoBehaviour
         {
             _availiblePartSitesList[i].SpawnPart(_addedPartsList[i]);
         }
+
+        AddMoney(-_cartCost);
+
+        _cartCost = 0;
+        ClearCart();
+        OnConfirmBuy?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void AddMoney(int addAmount)
+    {
+        _currentMoney += addAmount;
+        _moneyText.text = _currentMoney.ToString();
     }
 
     public int GetCartCost()
