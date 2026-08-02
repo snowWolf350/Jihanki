@@ -12,19 +12,19 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] Button _confirmBuyButton;
 
-    [SerializeField] TextMeshProUGUI _moneyText;
-
     List<PartSite> _availiblePartSitesList;
 
     List<PartsSO> _addedPartsList;
 
-    int _currentMoney = 1000;
+    int _currentMoney = 3000;
 
     int _cartCost;
 
     public static event EventHandler OnPartAddedSuccesfully;
     public static event EventHandler OnNoAvailiblePartSite;
     public static event EventHandler OnNoMoney;
+
+    public static event EventHandler OnMoneyChanged;
 
     public static event EventHandler OnConfirmBuy;
 
@@ -107,7 +107,7 @@ public class ShopManager : MonoBehaviour
     public void AddMoney(int addAmount)
     {
         _currentMoney += addAmount;
-        _moneyText.text = _currentMoney.ToString();
+        OnMoneyChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public int GetCartCost()

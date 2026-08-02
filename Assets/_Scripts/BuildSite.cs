@@ -67,11 +67,15 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
         {
             ShowPartVisual();
 
-            _partsList.Add(_partObjectPacedHere.GetPartsSO());    
+            _partsList.Add(_partObjectPacedHere.GetPartsSO());
 
             _buildAmount = 0;
             _buildIndex++;
             _baseBuilt = true;
+
+            _partObjectPacedHere = null;
+            Destroy(_partPlaceTransform.GetChild(0).gameObject);
+
         }
     }
 
