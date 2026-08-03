@@ -7,11 +7,11 @@ public class MoneyUI : MonoBehaviour
     private void Start()
     {
         _moneyText = GetComponent<TextMeshProUGUI>();
-        ShopManager.OnMoneyChanged += ShopManager_OnMoneyChanged;
+        MoneyManager.OnMoneyChanged += MoneyManager_OnMoneyChanged;
     }
 
-    private void ShopManager_OnMoneyChanged(object sender, System.EventArgs e)
+    private void MoneyManager_OnMoneyChanged(object sender, System.EventArgs e)
     {
-        _moneyText.text = ShopManager.Instance.GetCurrentAmount().ToString();   
+        _moneyText.text = MoneyManager.Instance.GetCurrentAmount().ToString();   
     }
 }

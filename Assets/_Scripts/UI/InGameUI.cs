@@ -12,6 +12,6 @@ public class InGameUI : MonoBehaviour
 
     private void ShopManager_OnConfirmBuy(object sender, System.EventArgs e)
     {
-        _moneyText.text = ShopManager.Instance.GetCurrentAmount().ToString();
+        _moneyText.text = MoneyManager.Instance.GetCurrentAmount().ToString();
     }
 }

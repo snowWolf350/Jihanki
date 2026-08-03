@@ -16,15 +16,11 @@ public class ShopManager : MonoBehaviour
 
     List<PartsSO> _addedPartsList;
 
-    int _currentMoney = 3000;
-
     int _cartCost;
 
     public static event EventHandler OnPartAddedSuccesfully;
     public static event EventHandler OnNoAvailiblePartSite;
     public static event EventHandler OnNoMoney;
-
-    public static event EventHandler OnMoneyChanged;
 
     public static event EventHandler OnConfirmBuy;
 
@@ -66,7 +62,7 @@ public class ShopManager : MonoBehaviour
 
         //partsite is availible
 
-        if (_cartCost + partsSO._partCost > _currentMoney)
+        if (_cartCost + partsSO._partCost > MoneyManager.Instance.GetCurrentAmount())
         {
             Debug.Log("No money");
             OnNoMoney?.Invoke(this, EventArgs.Empty);
@@ -97,27 +93,16 @@ public class ShopManager : MonoBehaviour
             _availiblePartSitesList[i].SpawnPart(_addedPartsList[i]);
         }
 
-        AddMoney(-_cartCost);
+        MoneyManager.Instance.AddMoney(-_cartCost);
 
         _cartCost = 0;
         ClearCart();
         OnConfirmBuy?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AddMoney(int addAmount)
-    {
-        _currentMoney += addAmount;
-        OnMoneyChanged?.Invoke(this, EventArgs.Empty);
-    }
-
     public int GetCartCost()
     {
         return _cartCost;
-    }
-
-    public int GetCurrentAmount()
-    {
-        return _currentMoney;
     }
 
     public List<PartsSO> GetAddedPartsList()
