@@ -12,6 +12,6 @@ public class MoneyUI : MonoBehaviour
 
     private void MoneyManager_OnMoneyChanged(object sender, System.EventArgs e)
     {
-        _moneyText.text = MoneyManager.Instance.GetCurrentAmount().ToString();   
+        _moneyText.text = "¥ " + MoneyManager.Instance.GetCurrentAmount().ToString();   
     }
 }

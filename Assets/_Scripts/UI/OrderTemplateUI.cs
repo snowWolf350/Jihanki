@@ -24,6 +24,6 @@ public class OrderTemplateUI : MonoBehaviour
     {
         _partsSO = partsSO;
         _partImage.sprite = partsSO._partSprite;
-        _partCostText.text = partsSO._partCost.ToString();
+        _partCostText.text = "¥ " + partsSO._partCost.ToString();
     }
 }
