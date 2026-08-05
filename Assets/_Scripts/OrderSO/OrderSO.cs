@@ -6,4 +6,5 @@ public class OrderSO : ScriptableObject
 {
     public List<PartsSO> _partsList;
     public int _orderCost;
+    public float _finishTime;
 }

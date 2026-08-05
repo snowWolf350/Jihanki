@@ -1,21 +1,29 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class DeliveryContainerUI : MonoBehaviour
 {
-    [SerializeField] List<BuildSite> _buildSiteList;
-
-    [SerializeField] GameObject _deliveryTemplate;
+    [SerializeField] GameObject _deliveryTemplateUI;
 
     private void Start()
     {
-        foreach (BuildSite buildSite in _buildSiteList)
+        DeliveryManager.Instance.OnNewOrderSpawned += DeliveryManager_OnNewOrderSpawned;
+    }
+
+    private void DeliveryManager_OnNewOrderSpawned(object sender, System.EventArgs e)
+    {
+        foreach (Transform t in transform)
         {
-            GameObject newtemplate = Instantiate(_deliveryTemplate, transform);
-
-            newtemplate.GetComponent<DeliveryTemplateUI>().SetBuildSiteTo(buildSite);
-
-            newtemplate.SetActive(true);
+            if (t == _deliveryTemplateUI.transform)
+            {
+                continue;
+            }
+            Destroy(t.gameObject);
+        }
+        foreach (OrderSO ordersSO in DeliveryManager.Instance.GetRequiredOrdersList())
+        {
+            GameObject spawnedTemplate = Instantiate(_deliveryTemplateUI, transform);
+            spawnedTemplate.GetComponent<DeliveryTemplateUI>().SetOrder_timeTo(ordersSO);
+            spawnedTemplate.SetActive(true);
         }
     }
 }

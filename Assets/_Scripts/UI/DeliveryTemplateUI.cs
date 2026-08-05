@@ -1,75 +1,32 @@
-
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using TMPro;
 
 public class DeliveryTemplateUI : MonoBehaviour
 {
-    BuildSite _buildSite;
+    OrderSO _ordersSO;
 
-    [SerializeField] Button _deliverButton;
-    [SerializeField] TextMeshProUGUI _buildSiteText;
+    [SerializeField] GameObject _partImage;
 
-    private void Awake()
+    [SerializeField] Transform _deliveryUIContainer;
+
+    [SerializeField] Image _fillImage;
+
+    private void Start()
     {
-        _deliverButton.onClick.AddListener(() =>
-        {
-            CheckOrder();
-        });
+        
     }
 
-    public void SetBuildSiteTo(BuildSite buildSite)
+    public void SetOrder_timeTo(OrderSO ordersSO)
     {
-        _buildSite = buildSite;
+        _ordersSO = ordersSO;
 
-        _buildSiteText.text = buildSite.name;
-    }
-
-    void CheckOrder()
-    {
-        List<PartsSO> buildSitePartsSoList = _buildSite.GetPartsSOList();
-
-        List<OrderSO> orderSOList = DeliveryManager.Instance.GetRequiredOrdersList();
-
-        OrderSO correctOrderSO = null;
-
-        foreach (OrderSO order in orderSOList)
+        foreach (PartsSO partsSO in _ordersSO._partsList)
         {
-            if (order._partsList.Count != buildSitePartsSoList.Count)
-            {
-                Debug.Log("Not matching number of parts");
-                return;
-            }
+            GameObject orderImageSpawned = Instantiate(_partImage,_deliveryUIContainer);
 
-            bool correctOrderFound = false;
-            //cycling through each order
-            foreach (PartsSO requiredPartSO in order._partsList)
-            {
-                if(buildSitePartsSoList.Contains(requiredPartSO) == false)
-                {
-                    //needed part is not there hence this is not the order
-                    correctOrderFound = false;
-                    break;
-                }
-                correctOrderFound = true;
-            }
-            if (correctOrderFound == true)
-            {
-                Debug.Log("Correct order found");
-                correctOrderSO = order;
-                break;
-            }
-        }
-        if(correctOrderSO == null)
-        {
-            Debug.Log("No correct order found");
-            return;
-        }
+            orderImageSpawned.GetComponent<Image>().sprite = partsSO._partSprite;
 
-        //correct order is found and stored
-        Debug.Log("Correct order found and added money");
-        _buildSite.ClearBuild();
-        MoneyManager.Instance.AddMoney(correctOrderSO._orderCost);
+            orderImageSpawned.SetActive(true);
+        }
     }
 }

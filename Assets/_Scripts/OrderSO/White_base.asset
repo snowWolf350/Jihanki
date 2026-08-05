@@ -15,3 +15,4 @@ MonoBehaviour:
   _partsList:
   - {fileID: 11400000, guid: 6f590067d6587294d8b4ac70e7c12b1e, type: 2}
   _orderCost: 100
+  _finishTime: 30
