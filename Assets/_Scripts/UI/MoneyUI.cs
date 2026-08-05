@@ -8,6 +8,8 @@ public class MoneyUI : MonoBehaviour
     {
         _moneyText = GetComponent<TextMeshProUGUI>();
         MoneyManager.OnMoneyChanged += MoneyManager_OnMoneyChanged;
+
+        _moneyText.text = "¥ " + MoneyManager.Instance.GetCurrentAmount().ToString();
     }
 
     private void MoneyManager_OnMoneyChanged(object sender, System.EventArgs e)

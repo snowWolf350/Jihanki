@@ -12,7 +12,7 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] Button _confirmBuyButton;
 
-    List<PartSite> _availiblePartSitesList;
+    List<PartSite> _OccupiedPartSitesList;
 
     List<PartsSO> _addedPartsList;
 
@@ -28,7 +28,7 @@ public class ShopManager : MonoBehaviour
     {
         Instance = this;
 
-        _availiblePartSitesList = new List<PartSite>();
+        _OccupiedPartSitesList = new List<PartSite>();
         _addedPartsList = new List<PartsSO>();
 
         _confirmBuyButton.onClick.AddListener(() =>
@@ -69,18 +69,38 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        _cartCost += partsSO._partCost;
-
-        _availiblePartSitesList.Add(availiblePartSite);
+        _OccupiedPartSitesList.Add(availiblePartSite);
         _addedPartsList.Add(partsSO);
 
-        OnPartAddedSuccesfully?.Invoke(this, EventArgs.Empty);
-
+        UpdateCartUIWith(partsSO._partCost);
     }
 
+    public void RemoveFromCart(PartsSO partsSO)
+    {
+        int partIndex =0;
+        foreach (PartsSO p_so in _addedPartsList)
+        {
+            if (p_so == partsSO)
+            {
+                //this is the part i want to remove
+                _addedPartsList.Remove(p_so);
+                _OccupiedPartSitesList.RemoveAt(partIndex);
+
+                UpdateCartUIWith(-partsSO._partCost);
+                break;
+            }
+            partIndex++;
+        }
+    }
+    void UpdateCartUIWith(int partsSOCost)
+    {
+        _cartCost += partsSOCost;
+
+        OnPartAddedSuccesfully?.Invoke(this, EventArgs.Empty);
+    }
     void ClearCart()
     {
-        _availiblePartSitesList.Clear();
+        _OccupiedPartSitesList.Clear();
         _addedPartsList.Clear();
     }
 
@@ -88,9 +108,9 @@ public class ShopManager : MonoBehaviour
     {
         if (_addedPartsList.Count == 0) return;
 
-        for (int i = 0; i < _availiblePartSitesList.Count; i++)
+        for (int i = 0; i < _OccupiedPartSitesList.Count; i++)
         {
-            _availiblePartSitesList[i].SpawnPart(_addedPartsList[i]);
+            _OccupiedPartSitesList[i].SpawnPart(_addedPartsList[i]);
         }
 
         MoneyManager.Instance.AddMoney(-_cartCost);
