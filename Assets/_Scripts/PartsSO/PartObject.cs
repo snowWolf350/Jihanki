@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class PartObject : MonoBehaviour
 {
     [SerializeField] PartsSO _partsSO;
+
+    public static event EventHandler OnParentChanged;
 
     IPartParent _currentParent;
     /// <summary>
@@ -22,6 +25,8 @@ public class PartObject : MonoBehaviour
         transform.parent = newPartParent.GetPlacementTransform();
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+
+        OnParentChanged?.Invoke(this, EventArgs.Empty);
     }
     public PartsSO GetPartsSO()
     {

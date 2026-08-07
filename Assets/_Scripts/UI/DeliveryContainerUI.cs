@@ -6,7 +6,7 @@ public class DeliveryContainerUI : MonoBehaviour
 
     private void Start()
     {
-        DeliveryManager.Instance.OnNewOrderSpawned += DeliveryManager_OnNewOrderSpawned;
+        DeliveryManager.Instance.OnOrderListChanged += DeliveryManager_OnNewOrderSpawned;
     }
 
     private void DeliveryManager_OnNewOrderSpawned(object sender, System.EventArgs e)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,6 +6,13 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] Animator _levelTransitionAnim;
+
+    public static event EventHandler OnSceneChanged;
+
+    private void Start()
+    {
+        OnSceneChanged?.Invoke(this, EventArgs.Empty);
+    }
 
     public void LoadGame()
     {
@@ -25,5 +33,10 @@ public class SceneLoader : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         SceneManager.LoadScene(buildIndex);
+    }
+
+    public static int GetBuildIndex()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
     }
 }

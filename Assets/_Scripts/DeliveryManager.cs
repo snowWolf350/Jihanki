@@ -16,7 +16,7 @@ public class DeliveryManager : MonoBehaviour
     float _orderSpawnTimer;
     float _orderSpawnTimerMax = 5;
 
-    public event EventHandler OnNewOrderSpawned;
+    public event EventHandler OnOrderListChanged;
 
     private void Awake()
     {
@@ -40,8 +40,14 @@ public class DeliveryManager : MonoBehaviour
 
             _currentOrder++;
             _orderSpawnTimer = 0;
-            OnNewOrderSpawned?.Invoke(this, EventArgs.Empty);
+            OnOrderListChanged?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    public void CompleteOrder(OrderSO orderSO)
+    {
+        _requiredOrderSOList.Remove(orderSO);
+        OnOrderListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public List<OrderSO> GetRequiredOrdersList()

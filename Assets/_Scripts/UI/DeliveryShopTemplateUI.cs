@@ -68,6 +68,7 @@ public class DeliveryShopTemplateUI : MonoBehaviour
 
         //correct order is found and stored
         Debug.Log("Correct order found and added money");
+        DeliveryManager.Instance.CompleteOrder(correctOrderSO);
         _buildSite.ClearBuild();
         MoneyManager.Instance.AddMoney(correctOrderSO._orderCost);
     }
