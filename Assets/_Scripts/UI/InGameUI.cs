@@ -10,6 +10,11 @@ public class InGameUI : MonoBehaviour
         ShopManager.OnConfirmBuy += ShopManager_OnConfirmBuy;
     }
 
+    private void OnDestroy()
+    {
+        ShopManager.OnConfirmBuy -= ShopManager_OnConfirmBuy;
+    }
+
     private void ShopManager_OnConfirmBuy(object sender, System.EventArgs e)
     {
         _moneyText.text = "¥ " + MoneyManager.Instance.GetCurrentAmount().ToString();

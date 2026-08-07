@@ -38,6 +38,11 @@ public class SoundManager : MonoBehaviour
         PartObject.OnParentChanged += PartObject_OnParentChanged;
         SceneLoader.OnSceneChanged += SceneLoader_OnSceneChanged;
     }
+    private void OnDestroy()
+    {
+        PartObject.OnParentChanged -= PartObject_OnParentChanged;
+        SceneLoader.OnSceneChanged -= SceneLoader_OnSceneChanged;
+    }
     private void PartObject_OnParentChanged(object sender, System.EventArgs e)
     {
         PlaySfxOneShot(_uiHoverSound);

@@ -8,7 +8,10 @@ public class DeliveryContainerUI : MonoBehaviour
     {
         DeliveryManager.Instance.OnOrderListChanged += DeliveryManager_OnNewOrderSpawned;
     }
-
+    private void OnDestroy()
+    {
+        DeliveryManager.Instance.OnOrderListChanged -= DeliveryManager_OnNewOrderSpawned;
+    }
     private void DeliveryManager_OnNewOrderSpawned(object sender, System.EventArgs e)
     {
         foreach (Transform t in transform)

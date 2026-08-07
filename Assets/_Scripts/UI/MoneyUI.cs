@@ -12,6 +12,11 @@ public class MoneyUI : MonoBehaviour
         _moneyText.text = "¥ " + MoneyManager.Instance.GetCurrentAmount().ToString();
     }
 
+    private void OnDestroy()
+    {
+        MoneyManager.OnMoneyChanged -= MoneyManager_OnMoneyChanged;
+    }
+
     private void MoneyManager_OnMoneyChanged(object sender, System.EventArgs e)
     {
         _moneyText.text = "¥ " + MoneyManager.Instance.GetCurrentAmount().ToString();   

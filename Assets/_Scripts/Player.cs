@@ -49,7 +49,13 @@ public class Player : MonoBehaviour,IPartParent
 
         GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
     }
+    private void OnDestroy()
+    {
+        GameInput.Instance.OnEPressed -= Input_OnEPressed;
+        GameInput.Instance.OnFPressed -= Input_OnFPressed;
 
+        GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
+    }
     private void Update()
     {
         if (_canWalk == false) return;

@@ -10,6 +10,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnEPressed;
     public event EventHandler OnFPressed;
     public event EventHandler OnAnyKeyPressed;
+    public event EventHandler OnEscapePressed;
 
     private void Awake()
     {
@@ -21,12 +22,14 @@ public class GameInput : MonoBehaviour
         _playerInput.player.interact.performed += Interact_performed;
         _playerInput.player.altinteract.performed += Altinteract_performed;
         _playerInput.player.anyButton.performed += AnyButton_performed;
+        _playerInput.player.escape.performed += Escape_performed;
     }
 
     private void OnDestroy()
     {
         _playerInput.player.interact.performed -= Interact_performed;
         _playerInput.player.anyButton.performed -= AnyButton_performed;
+        _playerInput.player.altinteract.performed -= Altinteract_performed;
 
         Instance = null;
     }
@@ -38,6 +41,11 @@ public class GameInput : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.Disable();
+    }
+
+    private void Escape_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnEscapePressed?.Invoke(this, EventArgs.Empty);
     }
 
     private void AnyButton_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

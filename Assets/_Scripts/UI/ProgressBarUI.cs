@@ -16,6 +16,11 @@ public class ProgressBarUI : MonoBehaviour
         Hide();
     }
 
+    private void OnDestroy()
+    {
+        HasProgress.onProgressChanged -= HasProgress_onProgressChanged;
+    }
+
     private void HasProgress_onProgressChanged(object sender, IHasProgress.onProgressChangedEventArgs e)
     {
         if (e.progressNormalized == 0 || e.progressNormalized == 1)

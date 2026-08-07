@@ -16,7 +16,11 @@ public class CartUI : MonoBehaviour
         ShopManager.OnPartAddedSuccesfully += ShopManager_OnPartAddedSuccesfully;
         ShopManager.OnConfirmBuy += ShopManager_OnConfirmBuy;
     }
-
+    private void OnDestroy()
+    {
+        ShopManager.OnPartAddedSuccesfully -= ShopManager_OnPartAddedSuccesfully;
+        ShopManager.OnConfirmBuy -= ShopManager_OnConfirmBuy;
+    }
     private void ShopManager_OnConfirmBuy(object sender, System.EventArgs e)
     {
         clearCartUI();

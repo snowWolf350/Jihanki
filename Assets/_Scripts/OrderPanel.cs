@@ -14,7 +14,10 @@ public class OrderPanel : MonoBehaviour, ICanInteract
 
         HideShop();
     }
-
+    private void OnDestroy()
+    {
+        Player.OnInteractableSiteChanged -= Player_OnPartSiteChanged;
+    }
     private void Player_OnPartSiteChanged(object sender, Player.InteractableSiteEventArgs e)
     {
         if (e.interactale == this as ICanInteract)
