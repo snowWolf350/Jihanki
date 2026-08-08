@@ -9,13 +9,11 @@ public class PauseUI : MonoBehaviour
     [SerializeField] Button _mainMenuButton;
     [SerializeField] Button _quitButton;
 
-    bool _isPaused;
-
     private void Awake()
     {
         _continueButton.onClick.AddListener(() =>
         {
-            _isPaused = false;
+            GameManager.Instance.SetGameStateToPlaying();
             Hide();
         });
         _mainMenuButton.onClick.AddListener(() =>
@@ -32,27 +30,27 @@ public class PauseUI : MonoBehaviour
 
     private void Start()
     {
-        GameInput.Instance.OnEscapePressed += Instance_OnEscapePressed;
+        GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
         Hide();
     }
+
     private void OnDestroy()
     {
-        GameInput.Instance.OnEscapePressed -= Instance_OnEscapePressed;
+        GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
     }
-    private void Instance_OnEscapePressed(object sender, System.EventArgs e)
+
+    private void GameManager_OnGameStateChanged(object sender, EventArgs e)
     {
-        if (_isPaused)
+        if (GameManager.Instance.IsGamePaused())
         {
-            //game is paused time to unpause
-            Hide();
+            Show();
         }
         else
         {
-            //game is not paused have to pause
-            Show();
+            Hide();
         }
-        _isPaused = !_isPaused;
     }
+
 
     private void Show()
     {

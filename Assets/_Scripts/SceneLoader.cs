@@ -36,6 +36,7 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator LoadNewScene(int buildIndex)
     {
+        Time.timeScale = 1;
         _levelTransitionAnim.SetTrigger("start");
         yield return new WaitForSeconds(1);
 

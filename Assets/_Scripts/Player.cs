@@ -49,12 +49,14 @@ public class Player : MonoBehaviour,IPartParent
 
         GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
+        GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
+
+        if (GameInput.Instance == null) return;
+
         GameInput.Instance.OnEPressed -= Input_OnEPressed;
         GameInput.Instance.OnFPressed -= Input_OnFPressed;
-
-        GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
     }
     private void Update()
     {
@@ -135,7 +137,7 @@ public class Player : MonoBehaviour,IPartParent
 
     private void GameManager_OnGameStateChanged(object sender, EventArgs e)
     {
-        _canWalk = !GameManager.Instance.IsGameInMenu(); // if game is in menu he cannot walk
+        _canWalk = GameManager.Instance.IsGamePlaying(); // if game is playing he can walk
     }
 
 

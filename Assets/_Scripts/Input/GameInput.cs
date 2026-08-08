@@ -25,14 +25,6 @@ public class GameInput : MonoBehaviour
         _playerInput.player.escape.performed += Escape_performed;
     }
 
-    private void OnDestroy()
-    {
-        _playerInput.player.interact.performed -= Interact_performed;
-        _playerInput.player.anyButton.performed -= AnyButton_performed;
-        _playerInput.player.altinteract.performed -= Altinteract_performed;
-
-        Instance = null;
-    }
     private void OnEnable()
     {
         _playerInput.Enable();

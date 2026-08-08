@@ -37,11 +37,19 @@ public class SoundManager : MonoBehaviour
 
         PartObject.OnParentChanged += PartObject_OnParentChanged;
         SceneLoader.OnSceneChanged += SceneLoader_OnSceneChanged;
+        GameManager.OnMenuOpened += GameManager_OnMenuOpened;
     }
+
+
     private void OnDestroy()
     {
         PartObject.OnParentChanged -= PartObject_OnParentChanged;
         SceneLoader.OnSceneChanged -= SceneLoader_OnSceneChanged;
+        GameManager.OnMenuOpened -= GameManager_OnMenuOpened;
+    }
+    private void GameManager_OnMenuOpened(object sender, System.EventArgs e)
+    {
+        PlaySfxOneShot(_heavyClick);
     }
     private void PartObject_OnParentChanged(object sender, System.EventArgs e)
     {

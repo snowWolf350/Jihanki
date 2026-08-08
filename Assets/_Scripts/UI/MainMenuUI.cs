@@ -20,10 +20,6 @@ public class MainMenuUI : MonoBehaviour
     {
         GameInput.Instance.OnAnyKeyPressed += GameInput_OnAnyKeyPressed;
     }
-    private void OnDestroy()
-    {
-        GameInput.Instance.OnAnyKeyPressed -= GameInput_OnAnyKeyPressed;
-    }
     private void GameInput_OnAnyKeyPressed(object sender, System.EventArgs e)
     {
         // hide the press any button screen
