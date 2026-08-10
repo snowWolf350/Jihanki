@@ -4,6 +4,10 @@ using System;
 
 public class BuildSite : InteractSite , ICanInteract , IHasProgress
 {
+    [SerializeField] GameObject _uiTemplate;
+
+    [SerializeField] Transform _uiCanvas;
+
     [SerializeField] List<PartsSO> _buildOrder;
 
     [SerializeField] List<PartSO_GameObjects> PartsSO_GameObjectsList;
@@ -39,12 +43,14 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
                 //this is the part needed for building
                 partObject.SetParentTo(this);
 
+
                 if (_baseBuilt == false) return; // base is not done yet
 
                 //base is done can add electric and drinks
-                _partsList.Add(partObject.GetPartsSO());
+                AddThisPartToPartList(partObject.GetPartsSO());
                 ShowPartVisual();
                 _buildIndex++;
+
             }
         }
     }
@@ -67,7 +73,7 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
         {
             ShowPartVisual();
 
-            _partsList.Add(_partObjectPacedHere.GetPartsSO());
+            AddThisPartToPartList(_partObjectPacedHere.GetPartsSO());
 
             _buildAmount = 0;
             _buildIndex++;
@@ -76,6 +82,26 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
             _partObjectPacedHere = null;
             Destroy(_partPlaceTransform.GetChild(0).gameObject);
 
+        }
+    }
+
+    void AddThisPartToPartList(PartsSO partsSO)
+    {
+        _partsList.Add(partsSO);
+
+        foreach (Transform child in _uiCanvas.transform)
+        {
+            if (child == _uiTemplate.transform)
+            {
+                continue;
+            }
+            Destroy(child.gameObject);
+        }
+        foreach (PartsSO _partsSO in _partsList)
+        {
+            GameObject newIcon = Instantiate(_uiTemplate, _uiCanvas);
+            newIcon.GetComponent<BuildSiteTemplateUI>().SetImageTo(_partsSO._partSprite);
+            newIcon.SetActive(true);
         }
     }
 
