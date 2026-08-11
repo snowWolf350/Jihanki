@@ -38,8 +38,9 @@ public class SoundManager : MonoBehaviour
         PartObject.OnParentChanged += PartObject_OnParentChanged;
         SceneLoader.OnSceneChanged += SceneLoader_OnSceneChanged;
         GameManager.OnMenuOpened += GameManager_OnMenuOpened;
+        ShopManager.OnNoAvailiblePartSite += ShopManager_OnNoAvailiblePartSite;
+        ShopManager.OnNoMoney += ShopManager_OnNoMoney;
     }
-
 
     private void OnDestroy()
     {
@@ -79,6 +80,16 @@ public class SoundManager : MonoBehaviour
             _musicAudioSource.Play();
             return;
         }
+    }
+
+    private void ShopManager_OnNoMoney(object sender, System.EventArgs e)
+    {
+        PlaySfxOneShot(_errorSound);
+    }
+
+    private void ShopManager_OnNoAvailiblePartSite(object sender, System.EventArgs e)
+    {
+        PlaySfxOneShot(_errorSound);
     }
 
     public void PlayGroundSlamSound()
