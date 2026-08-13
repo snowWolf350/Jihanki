@@ -7,6 +7,8 @@ public class PauseUI : MonoBehaviour
 
     [SerializeField] Button _continueButton;
     [SerializeField] Button _mainMenuButton;
+    [SerializeField] Button _saveButton;
+    [SerializeField] Button _loadButton;
     [SerializeField] Button _quitButton;
 
     private void Awake()
@@ -25,7 +27,16 @@ public class PauseUI : MonoBehaviour
             Application.Quit();
         
         });
-
+        _saveButton.onClick.AddListener(() =>
+        {
+            MoneyData data = MoneyManager.Instance.SaveMoneyAmount();
+            SaveSystem.SaveData(data);
+        });
+        _loadButton.onClick.AddListener(() =>
+        {
+            MoneyData data = SaveSystem.LoadData();
+            MoneyManager.Instance.LoadMoneyAmount(data);
+        });
     }
 
     private void Start()

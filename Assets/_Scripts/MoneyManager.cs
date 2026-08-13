@@ -27,5 +27,23 @@ public class MoneyManager : MonoBehaviour
     {
         return _currentMoney;
     }
+    public MoneyData SaveMoneyAmount()
+    {
+        return new MoneyData(_currentMoney);
+    }
+    public void LoadMoneyAmount(MoneyData data)
+    {
+        _currentMoney = data.amount;
+        OnMoneyChanged?.Invoke(this, EventArgs.Empty);
+    }
+}
+[Serializable]
+public class MoneyData
+{
+    public int amount;
 
+    public MoneyData(int amount)
+    {
+        this.amount = amount;
+    }
 }

@@ -122,6 +122,15 @@ public class BuildSite : InteractSite , ICanInteract , IHasProgress
         _buildIndex = 0;
         _baseBuilt = false;
 
+        foreach (Transform child in _uiCanvas.transform)
+        {
+            if (child.gameObject == _uiTemplate)
+            {
+                continue;
+            }
+            Destroy(child.gameObject);
+        }
+
         foreach (PartSO_GameObjects p_go in PartsSO_GameObjectsList)
         {
             p_go.GameObject?.SetActive(false);
